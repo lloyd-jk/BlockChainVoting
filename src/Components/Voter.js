@@ -3,7 +3,12 @@ import { Container, Row, Col, Button } from "react-bootstrap";
 
 const Voter = ({ image, name, branch, motto }) => {
   return (
-    <div style={{ padding: "10px", borderRadius: "10px" }}>
+    <div
+      style={{
+        padding: "10px",
+        borderRadius: "10px",
+      }}
+    >
       <div
         style={{
           marginTop: "5vh",
@@ -41,6 +46,11 @@ const Voter = ({ image, name, branch, motto }) => {
             <em>{motto}</em>
           </p>
         </Row>
+        {/* <Row style={{ justifyContent: "center" }}>
+          <p className="text-center text-white">
+            <a href="url">Manifesto</a>
+          </p>
+        </Row> */}
         <Row
           style={{
             marginTop: "2vh",

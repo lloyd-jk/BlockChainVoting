@@ -17,7 +17,7 @@ export default function App() {
     <Router>
       <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
         <Container>
-          <Navbar.Brand href="/">SAC ELECTIONS</Navbar.Brand>
+          <Navbar.Brand href="/">SAC Elections</Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="mx-auto"></Nav>
