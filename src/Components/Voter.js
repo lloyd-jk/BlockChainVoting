@@ -1,10 +1,16 @@
 import React from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
 
-const Voter = ({ image, name }) => {
+const Voter = ({ image, name, branch, motto }) => {
   return (
-    <div style={{ padding: "10px" }}>
-      <div style={{ marginTop: "5vh", backgroundColor: "#000001" }}>
+    <div style={{ padding: "10px", borderRadius: "10px" }}>
+      <div
+        style={{
+          marginTop: "5vh",
+          backgroundColor: "#000001",
+          borderRadius: "10px",
+        }}
+      >
         <Row style={{ marginTop: "5vh" }}>
           <div
             style={{
@@ -16,6 +22,9 @@ const Voter = ({ image, name }) => {
               style={{
                 height: "35vh",
                 width: "400px",
+                borderTopLeftRadius: "10px",
+                borderTopRightRadius: "10px",
+                objectFit: "cover",
               }}
               src={image}
             ></img>
@@ -24,6 +33,14 @@ const Voter = ({ image, name }) => {
         <Row style={{ marginTop: "2vh", justifyContent: "center" }}>
           <h3 className="text-center text-white">{name}</h3>
         </Row>
+        <Row style={{ justifyContent: "center" }}>
+          <h5 className="text-center text-white">{branch}</h5>
+        </Row>
+        <Row style={{ justifyContent: "center" }}>
+          <p className="text-center text-white">
+            <em>{motto}</em>
+          </p>
+        </Row>
         <Row
           style={{
             marginTop: "2vh",
@@ -31,7 +48,7 @@ const Voter = ({ image, name }) => {
             justifyContent: "center",
           }}
         >
-          <Button style={{ width: "150px", height: "70px" }}>
+          <Button bsPrefix="btn" style={{ width: "150px", height: "70px" }}>
             <h5>VOTE</h5>
           </Button>
         </Row>
