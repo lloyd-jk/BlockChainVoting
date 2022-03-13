@@ -11,7 +11,8 @@ To run this project locally:
 3. Start coding: `npm run`
 
 
-Links
-  [create-near-app]: https://github.com/near/create-near-app
-  [Node.js]: https://nodejs.org/en/download/package-manager/
-  [NEAR accounts]: https://docs.near.org/docs/concepts/account
+
+# Links
+- [create-near-app](https://github.com/near/create-near-app) 
+- [Node.js](https://nodejs.org/en/download/package-manager/)
+- [NEAR accounts](https://docs.near.org/docs/concepts/account)
