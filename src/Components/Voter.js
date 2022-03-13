@@ -1,69 +1,45 @@
 import React from "react";
-import { Container, Row, Col, Button } from "react-bootstrap";
+import { Row, Col, Button } from "react-bootstrap";
 
 const Voter = ({ image, name, branch, motto }) => {
   return (
-    <div
-      style={{
-        padding: "10px",
-        borderRadius: "10px",
-      }}
-    >
+    <Col lg={4} md={6} sm={8}>
       <div
+        className="mt-4"
         style={{
-          marginTop: "5vh",
           backgroundColor: "#000001",
-          borderRadius: "10px",
+          borderRadius: "3%",
         }}
       >
-        <Row style={{ marginTop: "5vh" }}>
-          <div
+        <Row>
+          <img
             style={{
-              display: "flex",
-              justifyContent: "center",
+              height: "40vh",
+              borderTopLeftRadius: "5%",
+              borderTopRightRadius: "5%",
+              objectFit: "cover",
             }}
-          >
-            <img
-              style={{
-                height: "35vh",
-                width: "400px",
-                borderTopLeftRadius: "10px",
-                borderTopRightRadius: "10px",
-                objectFit: "cover",
-              }}
-              src={image}
-            ></img>
-          </div>
+            src={image}
+          ></img>
         </Row>
-        <Row style={{ marginTop: "2vh", justifyContent: "center" }}>
+        <Row style={{ marginTop: "2vh" }}>
           <h3 className="text-center text-white">{name}</h3>
         </Row>
-        <Row style={{ justifyContent: "center" }}>
+        <Row>
           <h5 className="text-center text-white">{branch}</h5>
         </Row>
-        <Row style={{ justifyContent: "center" }}>
+        <Row>
           <p className="text-center text-white">
             <em>{motto}</em>
           </p>
         </Row>
-        {/* <Row style={{ justifyContent: "center" }}>
-          <p className="text-center text-white">
-            <a href="url">Manifesto</a>
-          </p>
-        </Row> */}
-        <Row
-          style={{
-            marginTop: "2vh",
-            paddingBottom: "5vh",
-            justifyContent: "center",
-          }}
-        >
+        <Row className="justify-content-center mt-4  pb-5">
           <Button bsPrefix="btn" style={{ width: "150px", height: "70px" }}>
             <h5>VOTE</h5>
           </Button>
         </Row>
       </div>
-    </div>
+    </Col>
   );
 };
 
