@@ -12,7 +12,6 @@ To run this project locally:
 
 
 Links
-=====
   [create-near-app]: https://github.com/near/create-near-app
   [Node.js]: https://nodejs.org/en/download/package-manager/
   [NEAR accounts]: https://docs.near.org/docs/concepts/account
