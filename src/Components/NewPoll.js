@@ -37,10 +37,11 @@ const NewPoll = (props) => {
       const handleChangeName = e => {
         e.preventDefault();
         
-        const index = parseInt(e.target.id[4])
+        const index = parseInt(e.target.id.slice(4))
         setArr(s => {
           const newArr = s.slice();
           newArr[index].candidateName = e.target.value;
+          console.log(arr)
           return newArr;
         });
       };
@@ -48,10 +49,11 @@ const NewPoll = (props) => {
       const handleChangeURL = e => {
         e.preventDefault();
         
-        const index = parseInt(e.target.id[3])
+        const index = parseInt(e.target.id.slice(3))
         setArr(s => {
           const newArr = s.slice();
           newArr[index].candidateURL = e.target.value;
+          console.log(arr)
           return newArr;
         });
       };
@@ -59,10 +61,11 @@ const NewPoll = (props) => {
       const handleChangeRollNo = e => {
         e.preventDefault();
         
-        const index = parseInt(e.target.id[4])
+        const index = parseInt(e.target.id.slice(4))
         setArr(s => {
           const newArr = s.slice();
           newArr[index].candidateRoll = e.target.value;
+          console.log(arr)
           return newArr;
         });
       };
@@ -70,10 +73,11 @@ const NewPoll = (props) => {
       const handleChangeBranch = e => {
         e.preventDefault();
         
-        const index = parseInt(e.target.id[4])
+        const index = parseInt(e.target.id.slice(4))
         setArr(s => {
           const newArr = s.slice();
           newArr[index].candidateBranch = e.target.value;
+          console.log(arr)
           return newArr;
         });
       };
@@ -81,17 +85,30 @@ const NewPoll = (props) => {
       const handleChangeMotto = e => {
         e.preventDefault();
         
-        const index = parseInt(e.target.id[4])
+        const index = parseInt(e.target.id.slice(4))
         setArr(s => {
           const newArr = s.slice();
           newArr[index].candidateMotto = e.target.value;
+          console.log(arr)
           return newArr;
         });
+      };
+
+      const [validated, setValidated] = useState(false);
+
+      const handleSubmit = (event) => {
+        const form = event.currentTarget;
+        if (form.checkValidity() === false) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+
+        setValidated(true);
       };
     
       return (
         <Container className="p-3">
-            <Form>
+            <Form noValidate validated={validated} onSubmit={handleSubmit}>
               <Row className="justify-content-center">
                 <Col md={8}>
                   <Form.Group className='mb-3 text-center'>
@@ -101,7 +118,11 @@ const NewPoll = (props) => {
                           id='name poll'
                           onChange={(e) => {setName(e.target.value)}}
                           placeholder='Enter Name of the Poll'
+                          required
                       ></Form.Control>
+                      <Form.Control.Feedback type="invalid">
+                        Please fill the poll name.
+                      </Form.Control.Feedback>
                   </Form.Group>
                 </Col>
               </Row>
@@ -120,7 +141,11 @@ const NewPoll = (props) => {
                                         id={'name'+i}
                                         onChange={handleChangeName}
                                         placeholder='Enter Name'
+                                        required
                                     ></Form.Control>
+                                    <Form.Control.Feedback type="invalid">
+                                      Please fill candidate name
+                                    </Form.Control.Feedback>
                                 </Form.Group>
                                 <Form.Group className='mb-3'>
                                     <Form.Label column="sm">Image URL</Form.Label>
@@ -129,6 +154,7 @@ const NewPoll = (props) => {
                                         id={'url'+i}
                                         onChange={handleChangeURL}
                                         placeholder='Enter Image URL'
+                                        defaultValue='https://i.stack.imgur.com/l60Hf.png'
                                     ></Form.Control>
                                 </Form.Group>
                                 <Form.Group className='mb-3'>
@@ -138,7 +164,11 @@ const NewPoll = (props) => {
                                         id={'roll'+i}
                                         onChange={handleChangeRollNo}
                                         placeholder='Enter Roll Number'
+                                        required
                                     ></Form.Control>
+                                    <Form.Control.Feedback type="invalid">
+                                      Please fill candidate roll number
+                                    </Form.Control.Feedback>
                                 </Form.Group>
                                 <Form.Group className='mb-3'>
                                     <Form.Label column="sm">Branch</Form.Label>
@@ -147,16 +177,24 @@ const NewPoll = (props) => {
                                         id={'bran'+i}
                                         onChange={handleChangeBranch}
                                         placeholder='Enter Branch Name'
+                                        required
                                     ></Form.Control>
+                                    <Form.Control.Feedback type="invalid">
+                                      Please fill candidate branch
+                                    </Form.Control.Feedback>
                                 </Form.Group>
                                 <Form.Group className='mb-3'>
                                     <Form.Label column="sm">Motto</Form.Label>
                                     <Form.Control
                                         size="sm"
-                                        id={'url'+i}
+                                        id={'mott'+i}
                                         onChange={handleChangeMotto}
                                         placeholder='Enter Motto'
+                                        required
                                     ></Form.Control>
+                                    <Form.Control.Feedback type="invalid">
+                                      Please fill candidate motto
+                                    </Form.Control.Feedback>
                                 </Form.Group>
                               </Card.Body>
                               </Card>
@@ -165,11 +203,11 @@ const NewPoll = (props) => {
                     })
                 }
                 </Row>
+                <div className="mt-3 text-center">
+                  <Button variant="outline-dark" onClick={addInput}>Add One More Candidate</Button>
+                  <Button variant="outline-dark" type="submit" className="ms-5">Create Poll</Button>
+                </div>
             </Form>
-          <div className="mt-3 text-center">
-            <Button variant="outline-dark" onClick={addInput}>Add One More Candidate</Button>
-            <Button variant="outline-dark" className="ms-5">Create Poll</Button>
-          </div>
         </Container>
       );
 }
