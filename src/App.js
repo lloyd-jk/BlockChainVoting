@@ -11,20 +11,25 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Home from "./Components/Home";
 import NewPoll from "./Components/NewPoll";
 import PollingStation from "./Components/PollingStation";
+import NITCLogo from "./assets/NITCLogoDark.png";
 
 export default function App() {
   return (
     <Router>
       <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
         <Container>
-          <Navbar.Brand href="/">SAC Elections</Navbar.Brand>
+          <Navbar.Brand href="/">
+            <img src={NITCLogo} width="60" height="60"></img>
+          </Navbar.Brand>
+          <Navbar.Brand href="/">SAC Election Portal</Navbar.Brand>
+
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="mx-auto"></Nav>
             <Nav>
-              <Nav.Link href="/NewPoll">New Poll</Nav.Link>
+              <Nav.Link href="/NewPoll">Start a New Poll</Nav.Link>
               <Nav.Link onClick={window.accountId === "" ? login : logout}>
-                {window.accountId === "" ? "Login" : window.accountId}
+                {window.accountId === "" ? "Login / Sign Up" : window.accountId}
               </Nav.Link>
             </Nav>
           </Navbar.Collapse>

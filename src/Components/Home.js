@@ -1,27 +1,60 @@
 import React from "react";
-import { Container, Table, Button } from "react-bootstrap";
+import { Container, Table, Button, Tab } from "react-bootstrap";
+import PollingStation from "./PollingStation";
 
 const Home = (props) => {
-  const promptList = ["TAS", "Gen Sec"];
+  const list_of_polls = [
+    "General Secretary 2022",
+    "Technical Affairs Secreatary",
+    "Cultural Affairs Secretary",
+    "Sports Secretary",
+  ];
   return (
     <Container>
-      <Table striped bordered hover>
+      <Table style={{ margin: "5vh" }} striped bordered hover>
         <thead>
-          <tr>
-            <th>SNo.</th>
-            <th>Polls</th>
-            <th>Link</th>
+          <tr style={{ fontSize: "20px" }}>
+            <th className="text-center">S. No </th>
+            <th className="text-center">List of Ongoing Polls</th>
+            <th className="text-center">Vote for a Canditate</th>
           </tr>
         </thead>
         <tbody>
-          {promptList.map((el, index) => {
+          {list_of_polls.map((poll, index) => {
             return (
-              <tr key={index}>
-                <td>{index + 1}</td>
-                <td>{el}</td>
-                <td>
-                  {" "}
-                  <Button>Go to Poll</Button>
+              <tr
+                key={index}
+                style={{
+                  fontSize: "18px",
+                }}
+              >
+                <td
+                  className="text-center"
+                  style={{ paddingTop: "15px", paddingBottom: "10px" }}
+                >
+                  {index + 1}
+                </td>
+                <td
+                  className="text-center"
+                  style={{ paddingTop: "15px", paddingBottom: "10px" }}
+                >
+                  {poll}
+                </td>
+                <td
+                  className="text-center"
+                  style={{
+                    paddingTop: "15px",
+                    paddingBottom: "10px",
+                    color: "black",
+                  }}
+                >
+                  <Button
+                    // variant="success"
+                    className="btn btn-info"
+                    href="/PollingStation"
+                  >
+                    Vote Now!
+                  </Button>
                 </td>
               </tr>
             );
