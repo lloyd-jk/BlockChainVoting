@@ -4,9 +4,9 @@ const CandidateURL = new PersistentMap<string, string>("CandidateURL");
 const UserParticipation = new PersistentMap<string, string[]>(
   "UserParticipation"
 );
-const PollsList = new PersistentMap<string, string[]>("Prompt Array");
+const PollsList = new PersistentMap<string, string[]>("List of Posts");
 const VoteArray = new PersistentMap<string, i32[]>("Voting Array");
-const CandidateList = new PersistentMap<string, string[]>("Candidate Pair");
+const CandidateList = new PersistentMap<string, string[]>("Candidate List");
 
 //View Methods
 
@@ -15,103 +15,110 @@ export function getURL(name: string): string {
   if (CandidateURL.contains(name)) {
     return CandidateURL.getSome(name);
   } else {
-    logging.log("Cant find the user");
+    // logging.log("Cant find the user");
     return "";
   }
 }
 
 // returns bool for whether the user voted
-export function didParticipate(prompt: string, user: string): bool {
-  if (UserParticipation.contains(prompt)) {
-    let getArray = UserParticipation.getSome(prompt);
+export function didParticipate(post: string, user: string): bool {
+  if (UserParticipation.contains(post)) {
+    let getArray = UserParticipation.getSome(post);
     return getArray.includes(user);
   } else {
-    logging.log("No prompts found");
+    // logging.log("No posts found");
     return false;
   }
 }
 
-export function getAllPrompts(): string[] {
-  if (PollsList.contains("AllArrays")) {
-    return PollsList.getSome("AllArrays");
+export function getAllPosts(): string[] {
+  if (PollsList.contains("AllPolls")) {
+    return PollsList.getSome("AllPolls");
   } else {
-    logging.log("No prompts found");
+    // logging.log("No posts found");
     return [];
   }
 }
 
 //returns the number of votes for each candidates
-export function getVotes(prompt: string): i32[] {
-  if (VoteArray.contains(prompt)) {
-    return VoteArray.getSome(prompt);
+export function getVotes(post: string): i32[] {
+  if (VoteArray.contains(post)) {
+    return VoteArray.getSome(post);
   } else {
-    logging.log("No prompts found");
-    return [0, 0]; //If there are only two candidates
+    // logging.log("No posts found");
+    let i32Array: i32[] = [];
+    for (let i = 0; i < CandidateList.getSome(post).length; i++) {
+      i32Array[i] = 0;
+      }
+  return i32Array;
   }
 }
 
-export function getCandidateList(prompt: string): string[] {
-  if (CandidateList.contains(prompt)) {
-    return CandidateList.getSome(prompt);
+export function getCandidateList(post: string): string[] {
+  if (CandidateList.contains(post)) {
+    return CandidateList.getSome(post);
   } else {
-    logging.log("No prompts found");
+    // logging.log("No posts found");
     return [];
   }
 }
 
 //Change Methods
-
 export function addURL(name: string, url: string): void {
   CandidateURL.set(name, url);
   logging.log("added url for: " + name);
 }
 
 export function addCandidateList(
-  prompt: string,
-  name1: string,
-  name2: string
+  post: string,
+  name_array: string[]
 ): void {
-  CandidateList.set(prompt, [name1, name2]);
+  CandidateList.set(post, name_array);
 }
 
-export function addToPollsList(prompt: string): void {
-  logging.log("added to prompt array");
-  if (PollsList.contains("AllArrays")) {
-    logging.log("add addition to prompt array");
-    let tempArray = PollsList.getSome("AllArrays");
-    tempArray.push(prompt);
-    PollsList.set("AllArrays", tempArray);
+export function addToPollsList(post: string): void {
+  logging.log("added to post array");
+  if (PollsList.contains("AllPolls")) {
+    // logging.log("add addition to post array");
+    let tempArray = PollsList.getSome("AllPolls");
+    tempArray.push(post);
+    PollsList.set("AllPolls", tempArray);
   } else {
-    PollsList.set("AllArrays", [prompt]);
+    PollsList.set("AllPolls", [post]);
   }
 }
 
 export function clearPollsList(): void {
-  logging.log("clearing prompt array");
-  PollsList.delete("AllArrays");
+  logging.log("clearing post array");
+  PollsList.delete("AllPolls");
 }
 
-export function addVote(prompt: string, index: i32): void {
-  if (VoteArray.contains(prompt)) {
-    let tempArray = VoteArray.getSome(prompt);
+export function addVote(post: string, index: i32): void {
+  if (VoteArray.contains(post)) {
+    let tempArray = VoteArray.getSome(post);
     let tempVal = tempArray[index];
     let newVal = tempVal + 1;
     tempArray[index] = newVal;
-    VoteArray.set(prompt, tempArray);
+    VoteArray.set(post, tempArray);
   } else {
-    let newArray = [0, 0];
+
+    let newArray: i32[] = [];
+    for (let i = 0; i < CandidateList.getSome(post).length; i++) {
+      newArray[i] = 0;
+      }
     newArray[index] = 1;
-    VoteArray.set(prompt, newArray);
+    logging.log(newArray);
+    VoteArray.set(post, newArray);
   }
 }
 
 //Add the user to a list to ensure that they dont cast vote twice
-export function recordUser(prompt: string, user: string): void {
-  if (UserParticipation.contains(prompt)) {
-    let tempArray = UserParticipation.getSome(prompt);
+export function recordUser(post: string, user: string): void {
+  if (UserParticipation.contains(post)) {
+    let tempArray = UserParticipation.getSome(post);
     tempArray.push(user);
-    UserParticipation.set(prompt, tempArray);
+    UserParticipation.set(post, tempArray);
   } else {
-    UserParticipation.set(prompt, [user]);
+    UserParticipation.set(post, [user]);
   }
 }
