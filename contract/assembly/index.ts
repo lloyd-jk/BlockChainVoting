@@ -1,6 +1,6 @@
 import { logging, PersistentMap } from "near-sdk-as";
 
-const CandidateURL = new PersistentMap<string, string>("CandidateURL");
+const CandidateDetails = new PersistentMap<string, string[]>("CandidateInfo");
 const UserParticipation = new PersistentMap<string, string[]>(
   "UserParticipation"
 );
@@ -11,12 +11,12 @@ const CandidateList = new PersistentMap<string, string[]>("Candidate List");
 //View Methods
 
 // get the url for the candidate
-export function getURL(name: string): string {
-  if (CandidateURL.contains(name)) {
-    return CandidateURL.getSome(name);
+export function getDetails(name: string): string[] {
+  if (CandidateDetails.contains(name)) {
+    return CandidateDetails.getSome(name);
   } else {
     // logging.log("Cant find the user");
-    return "";
+    return [];
   }
 }
 
@@ -64,9 +64,9 @@ export function getCandidateList(post: string): string[] {
 }
 
 //Change Methods
-export function addURL(name: string, url: string): void {
-  CandidateURL.set(name, url);
-  logging.log("added url for: " + name);
+export function addDetails(name: string, url: string, branch: string, motto: string): void {
+  CandidateDetails.set(name, [url, branch, motto]);
+  logging.log("added details for: " + name);
 }
 
 export function addCandidateList(
