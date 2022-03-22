@@ -96,18 +96,50 @@ const NewPoll = (props) => {
   const [validated, setValidated] = useState(false);
 
   const handleSubmit = (event) => {
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
+    const sendToBlockChain = async (name) => {
+      // changeDisable(true);
+      await window.contract.addToPollsList({
+        post: "test poll",
+      });
+      await window.contract.addURL({
+        name: name,
+        url: "testt",
+      });
 
-    setValidated(true);
+      await window.contract.addCandidateList({
+        post: "pol_test",
+        name_array: [name],
+      });
+
+      alert("head back to home page");
+    };
+    Object.entries(arr).map((item) => {
+      console.log("New");
+      console.log(item[0]);
+      console.log(item[1]["candidateName"]);
+      sendToBlockChain(item[1]["candidateName"]);
+
+      // console.log(item.candidateBranch);
+      // console.log(item.candidateMotto);
+      // console.log(item.candidateURL);
+    });
+    // for (const item in arr) {
+    //   console.log(item);
+    //   console.log(item.candidateName);
+    //   console.log(item.candidateBranch);
+    // }
+    // const form = event.currentTarget;
+    // if (form.checkValidity() === false) {
+    //   event.preventDefault();
+    //   event.stopPropagation();
+    // }
+
+    // setValidated(true);
   };
 
   return (
     <Container className="p-3">
-      <Form noValidate validated={validated} onSubmit={handleSubmit}>
+      <Form noValidate validated={validated}>
         <Row className="justify-content-center">
           <Col md={8}>
             <Form.Group className="mb-3 text-center">
@@ -208,7 +240,12 @@ const NewPoll = (props) => {
           <Button variant="outline-dark" onClick={addInput}>
             Add One More Candidate
           </Button>
-          <Button variant="outline-dark" type="submit" className="ms-5">
+          <Button
+            onClick={handleSubmit}
+            variant="outline-dark"
+            // type="submit"
+            className="ms-5"
+          >
             Create Poll
           </Button>
         </div>
