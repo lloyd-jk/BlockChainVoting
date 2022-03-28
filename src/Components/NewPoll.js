@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { Button, Container, Form, Row, Col, Card } from "react-bootstrap";
 
-const NewPoll = (props) => {
+const NewPoll = () => {
   const inputArr = [
     {
       id: 1,
       candidateName: "",
-      candidateURL: "",
+      candidateURL: "https://i.stack.imgur.com/l60Hf.png",
       candidateRoll: "",
       candidateBranch: "",
       candidateMotto: "",
@@ -14,8 +14,8 @@ const NewPoll = (props) => {
   ];
 
   const [arr, setArr] = useState(inputArr);
-  const [name, setName] = useState("");
-  console.log(arr);
+  const [pollName, setpollName] = useState("");
+  // console.log(arr);
   const addInput = () => {
     setArr((s) => {
       const lastId = s[s.length - 1].id;
@@ -24,7 +24,7 @@ const NewPoll = (props) => {
         {
           id: lastId + 1,
           candidateName: "",
-          candidateURL: "",
+          candidateURL: "https://i.stack.imgur.com/l60Hf.png",
           candidateRoll: "",
           candidateBranch: "",
           candidateMotto: "",
@@ -40,7 +40,7 @@ const NewPoll = (props) => {
     setArr((s) => {
       const newArr = s.slice();
       newArr[index].candidateName = e.target.value;
-      console.log(arr);
+      // console.log(arr);
       return newArr;
     });
   };
@@ -52,7 +52,7 @@ const NewPoll = (props) => {
     setArr((s) => {
       const newArr = s.slice();
       newArr[index].candidateURL = e.target.value;
-      console.log(arr);
+      // console.log(arr);
       return newArr;
     });
   };
@@ -64,7 +64,7 @@ const NewPoll = (props) => {
     setArr((s) => {
       const newArr = s.slice();
       newArr[index].candidateRoll = e.target.value;
-      console.log(arr);
+      // console.log(arr);
       return newArr;
     });
   };
@@ -76,7 +76,7 @@ const NewPoll = (props) => {
     setArr((s) => {
       const newArr = s.slice();
       newArr[index].candidateBranch = e.target.value;
-      console.log(arr);
+      // console.log(arr);
       return newArr;
     });
   };
@@ -88,54 +88,45 @@ const NewPoll = (props) => {
     setArr((s) => {
       const newArr = s.slice();
       newArr[index].candidateMotto = e.target.value;
-      console.log(arr);
+      // console.log(arr);
       return newArr;
     });
   };
 
   const [validated, setValidated] = useState(false);
 
-  const handleSubmit = (event) => {
-    const sendToBlockChain = async (name) => {
-      // changeDisable(true);
-      await window.contract.addToPollsList({
-        post: "test poll",
-      });
-      await window.contract.addURL({
-        name: name,
-        url: "testt",
-      });
+  const handleSubmit = async (event) => {
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+    setValidated(true);
 
-      await window.contract.addCandidateList({
-        post: "pol_test",
-        name_array: [name],
+    var nameList = [];
+    const addDetails = async (item) => {
+      await window.contract.addDetails({
+        name: item[1]["candidateName"],
+        url: item[1]["candidateURL"],
+        branch: item[1]["candidateBranch"],
+        motto: item[1]["candidateMotto"],
       });
-
-      alert("head back to home page");
     };
     Object.entries(arr).map((item) => {
-      console.log("New");
-      console.log(item[0]);
-      console.log(item[1]["candidateName"]);
-      sendToBlockChain(item[1]["candidateName"]);
-
-      // console.log(item.candidateBranch);
-      // console.log(item.candidateMotto);
-      // console.log(item.candidateURL);
+      nameList.push(item[1]["candidateName"]);
+      addDetails(item);
     });
-    // for (const item in arr) {
-    //   console.log(item);
-    //   console.log(item.candidateName);
-    //   console.log(item.candidateBranch);
-    // }
-    // const form = event.currentTarget;
-    // if (form.checkValidity() === false) {
-    //   event.preventDefault();
-    //   event.stopPropagation();
-    // }
 
-    // setValidated(true);
+    await window.contract.addToPollsList({
+      post: pollName,
+    });
+
+    await window.contract.addCandidateList({
+      post: pollName,
+      name_array: nameList,
+    });
   };
+  // alert("Success");
 
   return (
     <Container className="p-3">
@@ -148,7 +139,7 @@ const NewPoll = (props) => {
                 size="lg"
                 id="name poll"
                 onChange={(e) => {
-                  setName(e.target.value);
+                  setpollName(e.target.value);
                 }}
                 placeholder="Enter Name of the Poll"
                 required
