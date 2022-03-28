@@ -1,9 +1,7 @@
 import { logging, PersistentMap } from "near-sdk-as";
 
 const CandidateDetails = new PersistentMap<string, string[]>("CandidateInfo");
-const UserParticipation = new PersistentMap<string, string[]>(
-  "UserParticipation"
-);
+const UserParticipation = new PersistentMap<string, string[]>("UserParticipation");
 const PollsList = new PersistentMap<string, string[]>("List of Posts");
 const VoteArray = new PersistentMap<string, i32[]>("Voting Array");
 const CandidateList = new PersistentMap<string, string[]>("Candidate List");
