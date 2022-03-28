@@ -206,6 +206,7 @@ const NewPoll = () => {
                             onChange={handleChangeURL}
                             placeholder="Enter Image URL"
                             defaultValue="https://i.stack.imgur.com/l60Hf.png"
+                            required
                           ></Form.Control>
                         </Form.Group>
                         <Form.Group className="mb-3">
