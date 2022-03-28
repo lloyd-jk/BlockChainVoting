@@ -97,12 +97,15 @@ const NewPoll = () => {
   const [validated, setValidated] = useState(false);
 
   const handleSubmit = async (event) => {
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
+    setValidated(true);
+    event.preventDefault();
+    event.stopPropagation();
+    for(var i in arr){
+      if(arr[i].candidateName===''||arr[i].candidateURL===''||arr[i].candidateRoll===''||arr[i].candidateMotto===''||arr[i].candidateBranch){
+        console.log('heyyyyyyyyyyyyyy')
+        return false
+      }
     }
-    else{
       var nameList = [];
       const addDetails = async (item) => {
         await window.contract.addDetails({
@@ -114,6 +117,7 @@ const NewPoll = () => {
       };
       Object.entries(arr).map((item) => {
         nameList.push(item[1]["candidateName"]);
+        // console.log(item)
         addDetails(item);
       });
 
@@ -126,7 +130,7 @@ const NewPoll = () => {
       name_array: nameList,
     });
     window.location.href = "/";
-  }}
+  }
 
   return (
     <Container className="p-3">
