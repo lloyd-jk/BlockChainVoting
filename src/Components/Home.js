@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Container, Table, Button, Tab } from "react-bootstrap";
+import { Container, Table, Tab } from "react-bootstrap";
+import Button from "react-bootstrap/Button";
 
 const Home = (props) => {
   const [list_of_polls, changePolls] = useState([]);
@@ -49,13 +50,33 @@ const Home = (props) => {
                     color: "black",
                   }}
                 >
-                  <Button
-                    // variant="success"
-                    className="btn btn-info"
-                    onClick={() => props.collectCandidate(poll)}
-                  >
-                    Vote Now!
-                  </Button>
+                  <div>
+                    {window.accountId != "admin-sac.testnet" ? (
+                      <div>
+                        <Button
+                          variant="secondary"
+                          onClick={() => props.collectCandidate(poll)}
+                        >
+                          End the Poll
+                        </Button>
+                        <Button
+                          style={{ marginLeft: "20px" }}
+                          variant="danger"
+                          onClick={() => props.collectCandidate(poll)}
+                        >
+                          Vote Now!
+                        </Button>
+                      </div>
+                    ) : (
+                      <Button
+                        variant="light"
+                        className="btn-home"
+                        onClick={() => props.collectCandidate(poll)}
+                      >
+                        Vote Now!
+                      </Button>
+                    )}
+                  </div>
                 </td>
               </tr>
             );

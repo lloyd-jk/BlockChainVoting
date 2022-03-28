@@ -92,12 +92,30 @@ export function addToPollsList(post: string): void {
 }
 
 export function clearPollsList(): void {
-  logging.log("clearing post array");
-  const arr = PollsList.getSome("AllPolls");
+  if (PollsList.contains("AllPolls")) {
+    const arr = PollsList.getSome("AllPolls");
+  
+
+    
   arr.forEach((post) => {
+
+    if(CandidateList.contains(post)){
+    const arr_1 = CandidateList.getSome(post);
+    logging.log(arr_1.toString())
+    arr_1.forEach((name)=>{
+        CandidateDetails.delete(name);
+    });
+    }
+    VoteArray.delete(post);
+    UserParticipation.delete(post);
     CandidateList.delete(post);
+
+  
   });
+
   PollsList.delete("AllPolls");
+  }
+  
 }
 
 export function addVote(post: string, index: i32): void {

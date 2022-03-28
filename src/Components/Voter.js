@@ -34,7 +34,10 @@ const Voter = ({ image, name, branch, motto }) => {
           </p>
         </Row>
         <Row className="justify-content-center mt-4  pb-5">
-          <Button bsPrefix="btn" style={{ width: "150px", height: "70px" }}>
+          <Button
+            bsPrefix="btn-voter"
+            style={{ width: "150px", height: "70px" }}
+          >
             <h5>VOTE</h5>
           </Button>
         </Row>
