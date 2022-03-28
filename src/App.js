@@ -14,6 +14,16 @@ import PollingStation from "./Components/PollingStation";
 import NITCLogo from "./assets/NITCLogoDark.png";
 
 export default function App() {
+  const collectCandidates = async (poll) => {
+    console.log(poll);
+    var names_list = new Array();
+
+    names_list = await window.contract.getCandidateList({ post: poll });
+    localStorage.setItem("candidates", names_list);
+    localStorage.setItem("poll", poll);
+    window.location.replace(window.location.href + "PollingStation");
+  };
+
   return (
     <Router>
       <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
@@ -37,7 +47,10 @@ export default function App() {
       </Navbar>
 
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route
+          path="/"
+          element={<Home collectCandidate={collectCandidates} />}
+        />
         <Route path="/PollingStation" element={<PollingStation />} />
         <Route path="/NewPoll" element={<NewPoll />} />
       </Routes>

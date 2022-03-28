@@ -1,14 +1,15 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Table, Button, Tab } from "react-bootstrap";
-import PollingStation from "./PollingStation";
 
 const Home = (props) => {
-  const list_of_polls = [
-    "General Secretary 2022",
-    "Technical Affairs Secreatary",
-    "Cultural Affairs Secretary",
-    "Sports Secretary",
-  ];
+  const [list_of_polls, changePolls] = useState([]);
+
+  useEffect(() => {
+    const getPolls = async () => {
+      changePolls(await window.contract.getAllPosts());
+    };
+    getPolls();
+  }, []);
   return (
     <Container>
       <Table style={{ margin: "5vh" }} striped bordered hover>
@@ -51,7 +52,7 @@ const Home = (props) => {
                   <Button
                     // variant="success"
                     className="btn btn-info"
-                    href="/PollingStation"
+                    onClick={() => props.collectCandidate(poll)}
                   >
                     Vote Now!
                   </Button>
