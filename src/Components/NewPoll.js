@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Button, Container, Form, Row, Col, Card } from "react-bootstrap";
+// import { useHistory } from 'react-router-dom';
 
 const NewPoll = () => {
   const inputArr = [
@@ -125,8 +126,8 @@ const NewPoll = () => {
       post: pollName,
       name_array: nameList,
     });
+    window.location.href = "/";
   };
-  // alert("Success");
 
   return (
     <Container className="p-3">
