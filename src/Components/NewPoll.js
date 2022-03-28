@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Button, Container, Form, Row, Col, Card } from "react-bootstrap";
+// import { useHistory } from 'react-router-dom';
 
 const NewPoll = () => {
   const inputArr = [
@@ -120,15 +121,12 @@ const NewPoll = () => {
         post: pollName,
       });
 
-      await window.contract.addCandidateList({
-        post: pollName,
-        name_array: nameList,
-      });
-      }
-      setValidated(true)
-    
-  };
-  // alert("Success");
+    await window.contract.addCandidateList({
+      post: pollName,
+      name_array: nameList,
+    });
+    window.location.href = "/";
+  }}
 
   return (
     <Container className="p-3">
@@ -245,6 +243,6 @@ const NewPoll = () => {
       </Form>
     </Container>
   );
-};
+}
 
 export default NewPoll;
