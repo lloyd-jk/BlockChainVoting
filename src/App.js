@@ -37,7 +37,8 @@ export default function App() {
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="mx-auto"></Nav>
             <Nav>
-              <Nav.Link href="/NewPoll">Start a New Poll</Nav.Link>
+              {window.accountId === "admin-sac.testnet"? <Nav.Link href="/NewPoll">Start a New Poll</Nav.Link> : console.log(window.accountId)}
+              
               <Nav.Link onClick={window.accountId === "" ? login : logout}>
                 {window.accountId === "" ? "Login / Sign Up" : window.accountId}
               </Nav.Link>

@@ -7386,10 +7386,17 @@
   "resolved" "https://registry.npmjs.org/react-loading/-/react-loading-2.0.3.tgz"
   "version" "2.0.3"
 
+<<<<<<< HEAD
+"react-router-dom@^6.2.1":
+  "integrity" "sha512-I6Zax+/TH/cZMDpj3/4Fl2eaNdcvoxxHoH1tYOREsQ22OKDYofGebrNm6CTPUcvLvZm63NL/vzCYdjf9CUhqmA=="
+  "resolved" "https://registry.npmjs.org/react-router-dom/-/react-router-dom-6.2.1.tgz"
+  "version" "6.2.1"
+=======
 "react-router-dom@^6.2.2":
   "integrity" "sha512-AtYEsAST7bDD4dLSQHDnk/qxWLJdad5t1HFa1qJyUrCeGgEuCSw0VB/27ARbF9Fi/W5598ujvJOm3ujUCVzuYQ=="
   "resolved" "https://registry.npmjs.org/react-router-dom/-/react-router-dom-6.2.2.tgz"
   "version" "6.2.2"
+>>>>>>> cccb9fab83c7a43a681f1c646a0b9f213a57c9fa
   dependencies:
     "history" "^5.2.0"
     "react-router" "6.2.2"

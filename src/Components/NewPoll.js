@@ -115,15 +115,10 @@ const NewPoll = () => {
         branch: item[1]["candidateBranch"],
         motto: item[1]["candidateMotto"],
       });
-    };
-    Object.entries(arr).map((item) => {
-      nameList.push(item[1]["candidateName"]);
-      addDetails(item);
-    });
 
-    await window.contract.addToPollsList({
-      post: pollName,
-    });
+      await window.contract.addToPollsList({
+        post: pollName,
+      });
 
     await window.contract.addCandidateList({
       post: pollName,
@@ -263,6 +258,6 @@ const NewPoll = () => {
       )}
     </div>
   );
-};
+}
 
 export default NewPoll;
