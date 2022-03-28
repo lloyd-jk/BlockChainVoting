@@ -101,30 +101,32 @@ const NewPoll = () => {
       event.preventDefault();
       event.stopPropagation();
     }
-    setValidated(true);
-
-    var nameList = [];
-    const addDetails = async (item) => {
-      await window.contract.addDetails({
-        name: item[1]["candidateName"],
-        url: item[1]["candidateURL"],
-        branch: item[1]["candidateBranch"],
-        motto: item[1]["candidateMotto"],
+    else{
+      var nameList = [];
+      const addDetails = async (item) => {
+        await window.contract.addDetails({
+          name: item[1]["candidateName"],
+          url: item[1]["candidateURL"],
+          branch: item[1]["candidateBranch"],
+          motto: item[1]["candidateMotto"],
+        });
+      };
+      Object.entries(arr).map((item) => {
+        nameList.push(item[1]["candidateName"]);
+        addDetails(item);
       });
-    };
-    Object.entries(arr).map((item) => {
-      nameList.push(item[1]["candidateName"]);
-      addDetails(item);
-    });
 
-    await window.contract.addToPollsList({
-      post: pollName,
-    });
+      await window.contract.addToPollsList({
+        post: pollName,
+      });
 
-    await window.contract.addCandidateList({
-      post: pollName,
-      name_array: nameList,
-    });
+      await window.contract.addCandidateList({
+        post: pollName,
+        name_array: nameList,
+      });
+      }
+      setValidated(true)
+    
   };
   // alert("Success");
 
