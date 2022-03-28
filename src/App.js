@@ -37,11 +37,16 @@ export default function App() {
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="mx-auto"></Nav>
             <Nav>
+<<<<<<< HEAD
               <Nav.Link href="/NewPoll">
                 {window.accountId === "admin-sac.testnet"
                   ? "Start a New Poll"
                   : null}{" "}
               </Nav.Link>
+=======
+              {window.accountId === "admin-sac.testnet"? <Nav.Link href="/NewPoll">Start a New Poll</Nav.Link> : console.log(window.accountId)}
+              
+>>>>>>> 3a5cd03af6a4214d3dd1ed543976cd300b12dda8
               <Nav.Link onClick={window.accountId === "" ? login : logout}>
                 {window.accountId === "" ? "Login / Sign Up" : "Logout"}
               </Nav.Link>
