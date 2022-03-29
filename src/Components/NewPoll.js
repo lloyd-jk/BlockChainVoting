@@ -101,43 +101,49 @@ const NewPoll = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     event.stopPropagation();
-    if(pollName===""){
-        console.log(pollName)
-        setValidated(true);
-        return false
+    if (pollName === "") {
+      console.log(pollName);
+      setValidated(true);
+      return false;
     }
-    for(var i in arr){
-      if(arr[i].candidateName===''||arr[i].candidateURL===''||arr[i].candidateRoll===''||arr[i].candidateMotto===''||arr[i].candidateBranch===''){
-        console.log(arr[i])
+    for (var i in arr) {
+      if (
+        arr[i].candidateName === "" ||
+        arr[i].candidateURL === "" ||
+        arr[i].candidateRoll === "" ||
+        arr[i].candidateMotto === "" ||
+        arr[i].candidateBranch === ""
+      ) {
+        console.log(arr[i]);
         setValidated(true);
-        return false
+        return false;
       }
     }
-    isLoading(true)
-      var nameList = [];
-      const addDetails = async (item) => {
-        await window.contract.addDetails({
-          name: item[1]["candidateName"],
-          url: item[1]["candidateURL"],
-          branch: item[1]["candidateBranch"],
-          motto: item[1]["candidateMotto"],
-        });
-      };
-      Object.entries(arr).map((item) => {
-        nameList.push(item[1]["candidateName"]);
-        // console.log(item)
-        addDetails(item);
+    isLoading(true);
+    var nameList = [];
+    const addDetails = async (item) => {
+      await window.contract.addDetails({
+        name: item[1]["candidateName"],
+        url: item[1]["candidateURL"],
+        branch: item[1]["candidateBranch"],
+        motto: item[1]["candidateMotto"],
       });
+    };
+    Object.entries(arr).map((item) => {
+      nameList.push(item[1]["candidateName"]);
+      // console.log(item)
+      addDetails(item);
+    });
 
-      await window.contract.addToPollsList({
-        post: pollName,
-      });
+    await window.contract.addToPollsList({
+      post: pollName,
+    });
 
     await window.contract.addCandidateList({
       post: pollName,
       name_array: nameList,
     });
-    window.location.replace('/')
+    window.location.replace("/");
     isLoading(false);
   };
   // });
@@ -272,6 +278,6 @@ const NewPoll = () => {
       )}
     </div>
   );
-}
+};
 
 export default NewPoll;
