@@ -5,7 +5,7 @@ const UserParticipation = new PersistentMap<string, string[]>("UserParticipation
 const PollsList = new PersistentMap<string, string[]>("List of Posts");
 const VoteArray = new PersistentMap<string, i32[]>("Voting Array");
 const CandidateList = new PersistentMap<string, string[]>("Candidate List");
-
+const ActiveList = new PersistentMap<string, string[]>("If polls are active");
 //View Methods
 
 // get the url for the candidate
@@ -61,6 +61,15 @@ export function getCandidateList(post: string): string[] {
   }
 }
 
+export function getActivePolls(): string[]{
+  let ret: string[] = [];
+  if (ActiveList.contains("ActivePolls")) {
+    // logging.log("add addition to post array");
+    return ActiveList.getSome("ActivePolls");
+  }
+  return ret;
+}
+
 //Change Methods
 export function addDetails(
   name: string,
@@ -91,6 +100,35 @@ export function addToPollsList(post: string): void {
   }
 }
 
+export function activatePoll(post: string): void {
+  logging.log("added to active post array");
+  if (ActiveList.contains("ActivePolls")) {
+    // logging.log("add addition to post array");
+    const arr = ActiveList.getSome("ActivePolls");
+    if (arr.indexOf(post) < 0) {
+      let tempArray = ActiveList.getSome("ActivePolls");
+      tempArray.push(post);
+      ActiveList.set("ActivePolls", tempArray);
+    }
+  } else {
+    ActiveList.set("ActivePolls", [post]);
+  }
+}
+
+export function deactivatePoll(post: string): void {
+  logging.log("deactivating poll");
+  if (ActiveList.contains("ActivePolls")) {
+    // logging.log("add addition to post array");
+    const arr = ActiveList.getSome("ActivePolls");
+    const i = arr.indexOf(post);
+    if (i >= 0) {
+      let tempArray = ActiveList.getSome("ActivePolls");
+      tempArray.splice(i,1);
+      ActiveList.set("ActivePolls", tempArray);
+    }
+  }
+}
+
 export function clearPollsList(): void {
   if (PollsList.contains("AllPolls")) {
     const arr = PollsList.getSome("AllPolls");
@@ -109,7 +147,7 @@ export function clearPollsList(): void {
     VoteArray.delete(post);
     UserParticipation.delete(post);
     CandidateList.delete(post);
-
+    deactivatePoll(post);
   
   });
 

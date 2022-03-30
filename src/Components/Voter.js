@@ -48,7 +48,7 @@ const Voter = ({ image, name, branch, motto, votecount }) => {
             // >
             //   <h5>{votecount}</h5>
             // </div>
-            <Button bsPrefix="btn" style={{ width: "150px", height: "70px" }}>
+            <Button bsPrefix="btn" disabled={window.accountId===''} style={{ width: "150px", height: "70px" }}>
               <h5>VOTE</h5>
             </Button>
           )}

@@ -143,6 +143,10 @@ const NewPoll = () => {
       post: pollName,
       name_array: nameList,
     });
+
+    await window.contract.activatePoll({
+      post: pollName
+    });
     window.location.replace("/");
     isLoading(false);
   };
