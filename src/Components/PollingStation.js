@@ -6,6 +6,11 @@ import Spinner from "./Spinner";
 // import Pichai from "../assets/Pichai.jpg";
 // import Jack from "../assets/Jack.jpg";
 
+const getVotes = async (postName) => {
+  await window.contract.getVotes({
+    post: postName,
+  });
+};
 const PollingStation = () => {
   const [loading, isLoading] = useState(false);
   const [votes, changeVote] = useState([]);
@@ -76,6 +81,7 @@ const PollingStation = () => {
                   name={contestants[index]}
                   branch={det_users[index][1]}
                   motto={det_users[index][2]}
+                  votecount={votes[index]}
                 />
               );
             })}
