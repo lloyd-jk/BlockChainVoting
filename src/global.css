@@ -1,16 +1,22 @@
 body {
-  margin: 0;
-  padding: 0;
-  font-family: Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+    font-family: Helvetica, sans-serif;
 }
 
-.btn {
-  background-color: #0dc8bc !important;
-  border-radius: 10%;
-  outline-color: none;
+.btn-voter {
+    background-color: #0dc8bc !important;
+    border-radius: 10%;
+    outline-color: none;
 }
 
-.btn:focus,
-.btn:active {
-  outline: white !important;
+.btn-home {
+    background-color: #0bd62d !important;
+    border-radius: 10%;
+    outline-color: none;
+}
+
+.btn-voter:focus,
+.btn-voter:active {
+    outline: white !important;
 }
