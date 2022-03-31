@@ -1,7 +1,9 @@
 import { logging, PersistentMap } from "near-sdk-as";
 
 const CandidateDetails = new PersistentMap<string, string[]>("CandidateInfo");
-const UserParticipation = new PersistentMap<string, string[]>("UserParticipation");
+const UserParticipation = new PersistentMap<string, string[]>(
+  "UserParticipation"
+);
 const PollsList = new PersistentMap<string, string[]>("List of Posts");
 const VoteArray = new PersistentMap<string, i32[]>("Voting Array");
 const CandidateList = new PersistentMap<string, string[]>("Candidate List");
@@ -61,13 +63,23 @@ export function getCandidateList(post: string): string[] {
   }
 }
 
-export function getActivePolls(): string[]{
+export function getActivePolls(): string[] {
   let ret: string[] = [];
   if (ActiveList.contains("ActivePolls")) {
     // logging.log("add addition to post array");
     return ActiveList.getSome("ActivePolls");
   }
   return ret;
+}
+
+export function isPollActive(post: string): bool {
+  if (ActiveList.contains("ActivePolls")) {
+    let arr = ActiveList.getSome("ActivePolls");
+    if (arr.indexOf(post) < 0) {
+      return true;
+    }
+  }
+  return false;
 }
 
 //Change Methods
@@ -123,7 +135,7 @@ export function deactivatePoll(post: string): void {
     const i = arr.indexOf(post);
     if (i >= 0) {
       let tempArray = ActiveList.getSome("ActivePolls");
-      tempArray.splice(i,1);
+      tempArray.splice(i, 1);
       ActiveList.set("ActivePolls", tempArray);
     }
   }
@@ -132,28 +144,23 @@ export function deactivatePoll(post: string): void {
 export function clearPollsList(): void {
   if (PollsList.contains("AllPolls")) {
     const arr = PollsList.getSome("AllPolls");
-  
 
-    
-  arr.forEach((post) => {
-
-    if(CandidateList.contains(post)){
-    const arr_1 = CandidateList.getSome(post);
-    logging.log(arr_1.toString())
-    arr_1.forEach((name)=>{
-        CandidateDetails.delete(name);
+    arr.forEach((post) => {
+      if (CandidateList.contains(post)) {
+        const arr_1 = CandidateList.getSome(post);
+        logging.log(arr_1.toString());
+        arr_1.forEach((name) => {
+          CandidateDetails.delete(name);
+        });
+      }
+      VoteArray.delete(post);
+      UserParticipation.delete(post);
+      CandidateList.delete(post);
+      deactivatePoll(post);
     });
-    }
-    VoteArray.delete(post);
-    UserParticipation.delete(post);
-    CandidateList.delete(post);
-    deactivatePoll(post);
-  
-  });
 
-  PollsList.delete("AllPolls");
+    PollsList.delete("AllPolls");
   }
-  
 }
 
 export function addVote(post: string, index: i32): void {
