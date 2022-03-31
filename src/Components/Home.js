@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Container, Table, Tab } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
+import { async } from "regenerator-runtime";
 
 const Home = (props) => {
   const [list_of_polls, changePolls] = useState([]);
@@ -51,11 +52,11 @@ const Home = (props) => {
                   }}
                 >
                   <div>
-                    {window.accountId != "admin-sac.testnet" ? (
+                    {window.accountId !== "admin-sac.testnet" ? (
                       <div>
                         <Button
                           variant="secondary"
-                          onClick={() => props.collectCandidate(poll)}
+                          onClick={async() => await window.contract.deactivatePoll({post: poll})}
                         >
                           End the Poll
                         </Button>
