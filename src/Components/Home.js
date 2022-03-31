@@ -52,11 +52,13 @@ const Home = (props) => {
                   }}
                 >
                   <div>
-                    {window.accountId !== "admin-sac.testnet" ? (
+                    {window.accountId === "admin-sac.testnet" ? (
                       <div>
                         <Button
                           variant="secondary"
-                          onClick={async() => await window.contract.deactivatePoll({post: poll})}
+                          onClick={async () =>
+                            await window.contract.deactivatePoll({ post: poll })
+                          }
                         >
                           End the Poll
                         </Button>
