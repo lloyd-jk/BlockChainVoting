@@ -1,40 +1,29 @@
 import React, { useEffect, useState } from "react";
 import { Container, Table, Tab } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
-import { async } from "regenerator-runtime";
 
 const Home = (props) => {
-  const [list_of_polls, changePolls] = useState([]);
   const [end_poll_status, changeStatus] = useState([]);
-  // var list_of_polls_test=[];
+  const [list_of_polls, changePolls] = useState([]);
 
-  const isActive = async (poll) => {
-    const x = await window.contract.isPollActive({post: poll})
-    return x
-  }
-
-  const helper = async () => {
-    const x = await window.contract.getAllPosts();
-    changePolls(x)
-
-    return x;
-  }
   useEffect(() => {
     const getPolls = async () => {
-    const x= await window.contract.getAllPosts();
-    // list_of_polls_test=x
-    changePolls(x)
-    console.log(x)      
-      // console.log(arr)
-      let btn_status=[]
+      const x = await window.contract.getAllPosts();
+      changePolls(x);
+
+      let btn_status = [];
       for (let i = 0; i < x.length; i++) {
-        console.log(x[i])
-        btn_status[i] = await window.contract.isPollActive({
-          post: x[i],
-        });
-        changeStatus(btn_status);
-        console.log(btn_status[i])
+        btn_status[i] = await window.contract.isPollActive({ post: x[i] });
+        btn_status[i] = btn_status[i].toString();
       }
+      changeStatus(btn_status);
+
+      // let btn_status = [];
+
+      // for (let i = 0; i < x.length; i++) {
+      //   btn_status[i] = await window.contract.isPollActive({ post: x[i] });
+      //   changeStatus(btn_status);
+      // }
     };
 
     getPolls();
@@ -42,7 +31,6 @@ const Home = (props) => {
   }, []);
 
   return (
-    
     <Container>
       <Table style={{ margin: "5vh" }} striped bordered hover>
         <thead>
@@ -85,16 +73,15 @@ const Home = (props) => {
                     {window.accountId === "admin-sac.testnet" ? (
                       <div>
                         <Button
-                          variant="secondary"
-                          
-                          // onClick={async() => await window.contract.deactivatePoll({post: poll})}
+                          variant="info"
+                          onClick={() => props.viewPoll(poll)}
                         >
                           View Poll
                         </Button>
                         <Button
                           style={{ marginLeft: "20px" }}
                           variant="secondary"
-                          disabled={Boolean( end_poll_status[{index }]) }
+                          disabled={!Boolean(end_poll_status[index])}
                           // onClick={async() => await window.contract.deactivatePoll({post: poll})}
                         >
                           End the Poll
@@ -104,7 +91,7 @@ const Home = (props) => {
                           variant="danger"
                           onClick={() => props.collectCandidate(poll)}
                         >
-                          Vote Now!
+                          Delete Poll
                         </Button>
                       </div>
                     ) : (

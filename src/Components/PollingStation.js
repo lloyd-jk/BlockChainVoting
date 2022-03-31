@@ -19,10 +19,14 @@ const PollingStation = () => {
   const [det_users, changeDet] = useState([]);
   const [participate_users, changePart] = useState([]);
   const [button_users, changeButtonStatus] = useState([]);
+  const [viewCount, viewStatus] = useState(false);
 
   useEffect(() => {
     const getDetails = async () => {
       isLoading(true);
+
+      viewStatus(localStorage.getItem("viewCount"));
+
       let voteCount = await window.contract.getVotes({
         post: localStorage.getItem("poll"),
       });
@@ -82,6 +86,7 @@ const PollingStation = () => {
                   branch={det_users[index][1]}
                   motto={det_users[index][2]}
                   votecount={votes[index]}
+                  viewCount={viewCount}
                 />
               );
             })}

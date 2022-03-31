@@ -1,7 +1,8 @@
 import React from "react";
 import { Row, Col, Button } from "react-bootstrap";
 
-const Voter = ({ image, name, branch, motto, votecount }) => {
+const Voter = ({ image, name, branch, motto, votecount, viewCount }) => {
+  console.log(viewCount);
   return (
     <Col lg={4} md={6} sm={8}>
       <div
@@ -34,7 +35,7 @@ const Voter = ({ image, name, branch, motto, votecount }) => {
           </p>
         </Row>
         <Row className="justify-content-center mt-4  pb-5">
-          {window.accountId === "admin-sac.testnet" ? (
+          {viewCount === "true" ? (
             <h4 className="text-center text-white">Votes: {votecount}</h4>
           ) : (
             // <div
@@ -48,7 +49,11 @@ const Voter = ({ image, name, branch, motto, votecount }) => {
             // >
             //   <h5>{votecount}</h5>
             // </div>
-            <Button bsPrefix="btn" disabled={window.accountId===''} style={{ width: "150px", height: "70px" }}>
+            <Button
+              bsPrefix="btn"
+              disabled={window.accountId === ""}
+              style={{ width: "150px", height: "70px" }}
+            >
               <h5>VOTE</h5>
             </Button>
           )}
