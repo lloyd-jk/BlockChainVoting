@@ -75,7 +75,7 @@ export function getActivePolls(): string[] {
 export function isPollActive(post: string): bool {
   if (ActiveList.contains("ActivePolls")) {
     let arr = ActiveList.getSome("ActivePolls");
-    if (arr.indexOf(post) < 0) {
+    if (arr.indexOf(post) >= 0) {
       return true;
     }
   }
