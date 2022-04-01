@@ -20,10 +20,14 @@ const PollingStation = () => {
   const [participate_users, changePart] = useState([]);
   const [button_users, changeButtonStatus] = useState([]);
   const [buttonState, setbuttonState] = useState(false);
+  const [viewCount, viewStatus] = useState(false);
 
   useEffect(() => {
     const getDetails = async () => {
       isLoading(true);
+
+      viewStatus(localStorage.getItem("viewCount"));
+
       let voteCount = await window.contract.getVotes({
         post: localStorage.getItem("poll"),
       });
@@ -110,6 +114,7 @@ const PollingStation = () => {
                   isLoading={isLoading}
                   buttonState={buttonState}
                   setbuttonState={setbuttonState}
+                  viewCount={viewCount}
                 />
               );
             })}

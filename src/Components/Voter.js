@@ -64,7 +64,7 @@ const Voter = ({
           </p>
         </Row>
         <Row className="justify-content-center mt-4  pb-5">
-          {window.accountId === "admin-sac.testnet" ? (
+          {viewCount === "true" ? (
             <h4 className="text-center text-white">Votes: {votecount}</h4>
           ) : (
             // <div
