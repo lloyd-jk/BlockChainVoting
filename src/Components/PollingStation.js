@@ -19,6 +19,7 @@ const PollingStation = () => {
   const [det_users, changeDet] = useState([]);
   const [participate_users, changePart] = useState([]);
   const [button_users, changeButtonStatus] = useState([]);
+  const [buttonState, setbuttonState] = useState(false);
   const [viewCount, viewStatus] = useState(false);
 
   useEffect(() => {
@@ -56,7 +57,29 @@ const PollingStation = () => {
       isLoading(false);
     };
 
+    const checkDoubleVotes = async () => {
+      const pollName = localStorage.getItem("poll");
+      const user = window.accountId;
+      console.log(pollName);
+      console.log(user);
+      if (window.accountId === "") {
+        setbuttonState(true);
+        return;
+      }
+      let temp = await window.contract.didParticipate({
+        post: pollName,
+        user: user,
+      });
+      if (temp) {
+        setbuttonState(true);
+        return;
+      }
+      setbuttonState(false);
+    };
+    checkDoubleVotes();
+
     getDetails();
+    checkDoubleVotes();
   }, []);
 
   return (
@@ -81,11 +104,16 @@ const PollingStation = () => {
               return (
                 <Voter
                   key={index}
+                  index={index}
+                  pollName={localStorage.getItem("poll")}
                   image={det_users[index][0]}
                   name={contestants[index]}
                   branch={det_users[index][1]}
                   motto={det_users[index][2]}
                   votecount={votes[index]}
+                  isLoading={isLoading}
+                  buttonState={buttonState}
+                  setbuttonState={setbuttonState}
                   viewCount={viewCount}
                 />
               );

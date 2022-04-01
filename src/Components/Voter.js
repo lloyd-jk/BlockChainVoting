@@ -1,8 +1,37 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Row, Col, Button } from "react-bootstrap";
+import Spinner from "./Spinner";
 
-const Voter = ({ image, name, branch, motto, votecount, viewCount }) => {
-  console.log(viewCount);
+const Voter = ({
+  index,
+  pollName,
+  image,
+  name,
+  branch,
+  motto,
+  votecount,
+  isLoading,
+  buttonState,
+  setbuttonState,
+}) => {
+  const user = window.accountId;
+  const addVote = async () => {
+    isLoading(true);
+    // console.log(user);
+    await window.contract.addVote({
+      post: pollName,
+      index: index,
+    });
+
+    await window.contract.recordUser({
+      post: pollName,
+      user: user,
+    });
+    console.log("Succesfully voted.");
+    setbuttonState(true);
+    isLoading(false);
+  };
+
   return (
     <Col lg={4} md={6} sm={8}>
       <div
@@ -50,8 +79,9 @@ const Voter = ({ image, name, branch, motto, votecount, viewCount }) => {
             //   <h5>{votecount}</h5>
             // </div>
             <Button
+              onClick={addVote}
               bsPrefix="btn"
-              disabled={window.accountId === ""}
+              disabled={buttonState}
               style={{ width: "150px", height: "70px" }}
             >
               <h5>VOTE</h5>
