@@ -6,6 +6,15 @@ const Home = (props) => {
   const [end_poll_status, changeStatus] = useState([]);
   const [list_of_polls, changePolls] = useState([]);
 
+  const endAPoll = async () => {
+    await window.contract.deactivatePoll({ post: poll });
+    for (let i = 0; i < x.length; i++) {
+      btn_status[i] = await window.contract.isPollActive({ post: x[i] });
+      btn_status[i] = btn_status[i].toString();
+    }
+    changeStatus(btn_status);
+  };
+
   useEffect(() => {
     const getPolls = async () => {
       const x = await window.contract.getAllPosts();
@@ -13,7 +22,6 @@ const Home = (props) => {
       changePolls(x);
       console.log(x);
       // console.log(arr)
-      let btn_status = [];
       for (let i = 0; i < x.length; i++) {
         btn_status[i] = await window.contract.isPollActive({ post: x[i] });
         btn_status[i] = btn_status[i].toString();
@@ -83,7 +91,7 @@ const Home = (props) => {
                         </Button>
                         <Button
                           variant="secondary"
-                          disabled={!Boolean(end_poll_status[index])}
+                          disabled={end_poll_status[index] === "true"}
                           // onClick={async() => await window.contract.deactivatePoll({post: poll})}
                         >
                           End the Poll
