@@ -81,7 +81,7 @@ const Home = (props) => {
                         <Button
                           style={{ marginLeft: "20px" }}
                           variant="secondary"
-                          disabled={!Boolean(end_poll_status[index])}
+                          disabled={Boolean(end_poll_status[index])}
                           // onClick={async() => await window.contract.deactivatePoll({post: poll})}
                         >
                           End the Poll
