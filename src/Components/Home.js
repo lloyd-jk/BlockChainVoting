@@ -6,15 +6,22 @@ const Home = (props) => {
   const [end_poll_status, changeStatus] = useState([]);
   const [list_of_polls, changePolls] = useState([]);
 
-  const endAPoll = async () => {
-    await window.contract.deactivatePoll({ post: poll });
-    let btn_status = [];
-    for (let i = 0; i < x.length; i++) {
-      btn_status[i] = await window.contract.isPollActive({ post: x[i] });
-      btn_status[i] = btn_status[i].toString();
-    }
-    changeStatus(btn_status);
+  const deletePoll = async (poll) => {
+    // props.collectCandidate(poll);
+    const temp = await window.contract.deletePoll({ post: poll });
+    changePolls(temp);
+    location.reload();
   };
+
+  // const endAPoll = async () => {
+  //   await window.contract.deactivatePoll({ post: poll });
+  //   let btn_status = [];
+  //   for (let i = 0; i < x.length; i++) {
+  //     btn_status[i] = await window.contract.isPollActive({ post: x[i] });
+  //     btn_status[i] = btn_status[i].toString();
+  //   }
+  //   changeStatus(btn_status);
+  // };``
 
   useEffect(() => {
     const getPolls = async () => {
@@ -101,7 +108,7 @@ const Home = (props) => {
                         <Button
                           style={{ marginLeft: "20px" }}
                           variant="danger"
-                          onClick={() => props.collectCandidate(poll)}
+                          onClick={() => deletePoll(poll)}
                         >
                           Delete Poll
                         </Button>
@@ -112,7 +119,7 @@ const Home = (props) => {
                         className="btn-home"
                         onClick={() => props.collectCandidate(poll)}
                       >
-                        Vote Now!
+                        View Poll
                       </Button>
                     )}
                   </div>

@@ -45,6 +45,7 @@ export async function initContract() {
         "recordUser",
         "activatePoll",
         "deactivatePoll",
+        "deletePoll",
       ],
     }
   );
