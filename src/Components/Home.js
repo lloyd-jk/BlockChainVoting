@@ -8,6 +8,7 @@ const Home = (props) => {
 
   const endAPoll = async () => {
     await window.contract.deactivatePoll({ post: poll });
+    let btn_status = [];
     for (let i = 0; i < x.length; i++) {
       btn_status[i] = await window.contract.isPollActive({ post: x[i] });
       btn_status[i] = btn_status[i].toString();
@@ -22,6 +23,7 @@ const Home = (props) => {
       changePolls(x);
       console.log(x);
       // console.log(arr)
+      let btn_status = [];
       for (let i = 0; i < x.length; i++) {
         btn_status[i] = await window.contract.isPollActive({ post: x[i] });
         btn_status[i] = btn_status[i].toString();
