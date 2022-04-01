@@ -93,7 +93,7 @@ const Home = (props) => {
                         </Button>
                         <Button
                           variant="secondary"
-                          disabled={end_poll_status[index] === "true"}
+                          disabled={end_poll_status[index] === "false"}
                           // onClick={async() => await window.contract.deactivatePoll({post: poll})}
                         >
                           End the Poll
