@@ -13,6 +13,7 @@ const Voter = ({
   isLoading,
   buttonState,
   setbuttonState,
+  viewCount,
 }) => {
   const user = window.accountId;
   const addVote = async () => {

@@ -75,12 +75,16 @@ const Home = (props) => {
                     {window.accountId === "admin-sac.testnet" ? (
                       <div>
                         <Button
+                          variant="info"
+                          style={{ marginRight: "20px" }}
+                          onClick={() => props.viewPoll(poll)}
+                        >
+                          View Poll
+                        </Button>
+                        <Button
                           variant="secondary"
-                          disabled={Boolean(end_poll_status[index])}
+                          disabled={!Boolean(end_poll_status[index])}
                           // onClick={async() => await window.contract.deactivatePoll({post: poll})}
-                          onClick={async () =>
-                            await window.contract.deactivatePoll({ post: poll })
-                          }
                         >
                           End the Poll
                         </Button>
