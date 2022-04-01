@@ -37,7 +37,11 @@ export default function App() {
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="mx-auto"></Nav>
             <Nav>
-              {window.accountId === "admin-sac.testnet"?<Nav.Link href="/NewPoll">Start a New Poll</Nav.Link>:console.log(window.accountId)}
+              {window.accountId === "admin-sac.testnet" ? (
+                <Nav.Link href="/NewPoll">Start a New Poll</Nav.Link>
+              ) : (
+                console.log(window.accountId)
+              )}
               <Nav.Link onClick={window.accountId === "" ? login : logout}>
                 {window.accountId === "" ? "Login / Sign Up" : "Logout"}
               </Nav.Link>
@@ -52,7 +56,12 @@ export default function App() {
           element={<Home collectCandidate={collectCandidates} />}
         />
         <Route path="/PollingStation" element={<PollingStation />} />
-        <Route path="/NewPoll" element={window.accountId==="admin-sac.testnet"?<NewPoll />:null} />
+        <Route
+          path="/NewPoll"
+          element={
+            window.accountId === "admin-sac.testnet" ? <NewPoll /> : null
+          }
+        />
       </Routes>
     </Router>
   );
