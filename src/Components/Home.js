@@ -8,12 +8,12 @@ const Home = (props) => {
 
   useEffect(() => {
     const getPolls = async () => {
-    const x= await window.contract.getAllPosts();
-    // list_of_polls_test=x
-    changePolls(x)
-    console.log(x)
+      const x = await window.contract.getAllPosts();
+      // list_of_polls_test=x
+      changePolls(x);
+      console.log(x);
       // console.log(arr)
-      let btn_status=[]
+      let btn_status = [];
       for (let i = 0; i < x.length; i++) {
         btn_status[i] = await window.contract.isPollActive({ post: x[i] });
         btn_status[i] = btn_status[i].toString();
@@ -33,7 +33,6 @@ const Home = (props) => {
   }, []);
 
   return (
-
     <Container>
       <Table style={{ margin: "5vh" }} striped bordered hover>
         <thead>
@@ -77,6 +76,8 @@ const Home = (props) => {
                       <div>
                         <Button
                           variant="secondary"
+                          disabled={Boolean(end_poll_status[index])}
+                          // onClick={async() => await window.contract.deactivatePoll({post: poll})}
                           onClick={async () =>
                             await window.contract.deactivatePoll({ post: poll })
                           }
