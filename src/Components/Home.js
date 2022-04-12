@@ -28,6 +28,8 @@ const Home = (props) => {
       btn_status[i] = await window.contract.isPollActive({ post: x[i] });
       btn_status[i] = btn_status[i].toString();
     }
+    changeStatus(btn_status);
+    isLoading(false);
   };
   // const endAPoll = async () => {
   //   await window.contract.deactivatePoll({ post: poll });
@@ -135,22 +137,16 @@ const Home = (props) => {
                         ) : end_poll_status[index] === "true" ? (
                           <div>
                             <Button
-                              variant="secondary"
-                              disabled={end_poll_status[index] === "true"}
-                              // onClick={async() => await window.contract.deactivatePoll({post: poll})}
-                            >
-                              End the Poll
-                            </Button>
-                            <Button
                               style={{ marginLeft: "20px" }}
                               variant="danger"
-                              onClick={() => props.viewPoll(poll)}
+                              onClick={() => props.collectCandidate(poll)}
                             >
                               Vote Now!
                             </Button>
                           </div>
                         ) : (
                           <Button
+                            style={{ marginLeft: "20px" }}
                             variant="info"
                             onClick={() => props.viewPoll(poll)}
                           >
