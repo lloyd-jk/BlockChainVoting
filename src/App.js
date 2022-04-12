@@ -11,7 +11,9 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Home from "./Components/Home";
 import NewPoll from "./Components/NewPoll";
 import PollingStation from "./Components/PollingStation";
+import PhoneNumber from "./Components/PhoneNumber";
 import NITCLogo from "./assets/NITCLogoDark.png";
+import OTP from "./Components/OTP";
 
 export default function App() {
   const collectCandidates = async (poll) => {
@@ -76,6 +78,8 @@ export default function App() {
             window.accountId === "admin-sac.testnet" ? <NewPoll /> : null
           }
         />
+        <Route path="/PhoneNumber" element={<PhoneNumber />} />
+        <Route path="/OTP" element={<OTP />} />
       </Routes>
     </Router>
   );
