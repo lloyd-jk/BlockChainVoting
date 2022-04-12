@@ -10,7 +10,7 @@ const OTP = () =>
     }
     return(
     <Row className="justify-content-center align-items-center" style={{ height: "75vh", maxWidth: "100%" }}>
-        <Col className="border rounded p-4" xs={10} sm={8} md={6} lg={4}>
+        <Col className="border rounded p-4 bg-light" xs={10} sm={8} md={6} lg={4}>
             <p className="fs-4 text-center mb-1">OTP has been sent to **********</p>
             <Form noValidate validated={validated} onSubmit={handleSubmit}>
                 <Row className="justify-content-center">
