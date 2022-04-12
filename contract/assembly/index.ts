@@ -164,16 +164,9 @@ export function clearPollsList(): void {
 }
 
 export function deletePoll(post: string): string[] {
-  // function arrayRemove(arr: string[], value: string) {
-  //   return arr.filter(function (ele) {
-  //     return ele != value;
-  //   });
-  // }
   if (PollsList.contains("AllPolls")) {
     var arr = PollsList.getSome("AllPolls");
-    // arr = arr.filter(function (ele) {
-    //   return ele != post;
-    // });
+
     var index = arr.indexOf(post);
     if (index !== -1) {
       arr.splice(index, 1);
@@ -183,6 +176,7 @@ export function deletePoll(post: string): string[] {
     VoteArray.delete(post);
     UserParticipation.delete(post);
     CandidateList.delete(post);
+    PollsList.set("AllPolls", arr);
     return arr;
   }
   return [];
