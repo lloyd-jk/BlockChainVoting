@@ -3,11 +3,33 @@ import {Col, Row, Form, Button} from 'react-bootstrap';
 
 const OTP = () =>
 {   const [validated, setValidated] = useState(false);
+    const [OTP, setOTP] = useState('');
     const handleSubmit = async (event) => {
         event.preventDefault();
         event.stopPropagation();
         setValidated(true);
     }
+
+    const verifyOTP = (e) =>{
+        let otp = e.target.value;
+        setOTP(otp);
+
+        if(otp.length == 6)
+        {
+            let confirmationResult = window.confirmationResult;
+            confirmationResult
+              .confirm(otp)
+              .then((result) => {
+                
+                const user = result.user;
+                console.log(user);
+                
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+        }
+    } 
     return(
     <Row className="justify-content-center align-items-center" style={{ height: "75vh", maxWidth: "100%" }}>
         <Col className="border rounded p-4 bg-light" xs={10} sm={8} md={6} lg={4}>
@@ -22,6 +44,8 @@ const OTP = () =>
                         id="otp"
                         type="tel" 
                         pattern="^\d{6}$"
+                        value={OTP}
+                        onChange={verifyOTP}
                         // placeholder="Enter your phone number"
                         required
                     ></Form.Control>
