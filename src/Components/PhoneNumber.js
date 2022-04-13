@@ -6,6 +6,11 @@ const PhoneNumber = () =>
     const handleSubmit = async (event) => {
         event.preventDefault();
         event.stopPropagation();
+        const form = event.currentTarget;
+        if (form.checkValidity() === true) {
+            window.location.replace('/otp')
+        }
+        console.log(form);
         setValidated(true);
     }
     return(
@@ -26,14 +31,13 @@ const PhoneNumber = () =>
                         required
                     ></Form.Control>
                     <Form.Control.Feedback type="invalid">
-                        Please enter a valid phone number
+                        Please enter a valid 10 digit phone number
                     </Form.Control.Feedback>
                     </Form.Group>
                 </Col>
                 </Row>
                 <div className="text-center">
                     <Button
-                        onClick={handleSubmit}
                         variant="outline-dark"
                         type="submit"
                     >
