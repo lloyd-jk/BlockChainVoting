@@ -57,7 +57,7 @@ const OTP = () =>
                 </Row>
                 <div className="text-center">
                     <Button
-                        onClick={handleSubmit}
+                        // onClick={handleSubmit}
                         variant="outline-dark"
                         type="submit"
                     >

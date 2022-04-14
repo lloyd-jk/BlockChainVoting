@@ -23,22 +23,26 @@ const PhoneNumber = () =>
 
 
     const handleSubmit = async (event) => {
-      event.preventDefault();
-      event.stopPropagation();
-      // if (form.checkValidity() === true) {
-      //     window.location.replace("http://localhost:1234/OTP");
-      // }
-      setValidated(true);
-      generateRecaptcha();
-      let appVerifier = window.recaptchaVerifier;
-      signInWithPhoneNumber(authentication, "+917902472359", appVerifier)
-        .then((confirmationResult) => {
-          window.confirmationResult = confirmationResult;
-          window.location.replace("http://localhost:1234/OTP");
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+        event.preventDefault();
+        event.stopPropagation();
+        // if (form.checkValidity() === true) {
+        //     window.location.replace("http://localhost:1234/OTP");
+        // }
+        const form = event.currentTarget;
+        if (form.checkValidity() === true) {
+            generateRecaptcha();
+            let appVerifier = window.recaptchaVerifier;
+            signInWithPhoneNumber(authentication, `+91${form.elements[0].value}`, appVerifier)
+                .then((confirmationResult) => {
+                    window.confirmationResult = confirmationResult;
+                    window.location.replace('/otp')
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        }
+        
+        setValidated(true);
       
     }
     return (
@@ -75,7 +79,7 @@ const PhoneNumber = () =>
             </Row>
             <div className="text-center">
               <Button
-                onClick={handleSubmit}
+                // onClick={handleSubmit}
                 variant="outline-dark"
                 type="submit"
                 
