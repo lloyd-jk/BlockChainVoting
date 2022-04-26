@@ -129,6 +129,7 @@ const PhoneNumber = () =>{
               const user = result.user;
               console.log(user);
               console.log('Success')
+              localStorage.setItem("otpVerified", true);
               window.location.replace('/');
             })
             .catch((error) => {

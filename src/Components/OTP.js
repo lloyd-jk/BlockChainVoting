@@ -5,6 +5,7 @@ const OTP = () =>
 
 {   
     const [validated, setValidated] = useState(false);
+    const [OTP, setOTP] = useState('');
     const handleSubmit = async (event) => {
         event.preventDefault();
         event.stopPropagation();
@@ -17,9 +18,7 @@ const OTP = () =>
 
         if(otp.length == 6)
         {
-            // let confirmationResult = localStorage.getItem("confirmationResult");
-            // const obj = JSON.parse(confirmationResult);
-            // console.log(obj);
+            let confirmationResult = window.confirmationResult;
             confirmationResult
               .confirm(otp)
               .then((result) => {

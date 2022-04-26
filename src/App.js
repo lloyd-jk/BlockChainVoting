@@ -1,5 +1,5 @@
 import "regenerator-runtime/runtime";
-import React from "react";
+import React, {useEffect}  from "react";
 import { login, logout } from "./utils";
 import "./global.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -15,7 +15,15 @@ import PhoneNumber from "./Components/PhoneNumber";
 import NITCLogo from "./assets/NITCLogoDark.png";
 import OTP from "./Components/OTP";
 
+
+
 export default function App() {
+
+useEffect(() => {
+  localStorage.setItem("otpVerified", false);
+}, []); 
+  
+  
   const collectCandidates = async (poll) => {
     var names_list = new Array();
 
@@ -25,6 +33,7 @@ export default function App() {
     localStorage.setItem("viewCount", false);
 
     window.location.replace(window.location.href + "PollingStation");
+    
   };
 
   const viewPoll = async (poll) => {
@@ -38,6 +47,7 @@ export default function App() {
 
     window.location.replace(window.location.href + "PollingStation");
   };
+  
   return (
     <Router>
       <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
@@ -68,7 +78,11 @@ export default function App() {
         <Route
           path="/"
           element={
-            <Home collectCandidate={collectCandidates} viewPoll={viewPoll} />
+            localStorage.getItem("otpVerified") === "true" ? (
+              <Home collectCandidate={collectCandidates} viewPoll={viewPoll} />
+            ) : (
+              <PhoneNumber />
+            )
           }
         />
         <Route path="/PollingStation" element={<PollingStation />} />
