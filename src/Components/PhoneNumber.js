@@ -12,6 +12,9 @@ const PhoneNumber = () =>{
 
   
   const [loading, isLoading] = useState(false);
+  const [otp, isOtp] = useState(false);
+  const [result, setResult] = useState(false);
+  const [validated, setValidated] = useState(false);
 
   const generateRecaptcha = () => {
     window.recaptchaVerifier = new RecaptchaVerifier(
@@ -50,8 +53,8 @@ const PhoneNumber = () =>{
 
             // localStorage.setItem("confirmationResult", confirmationResult);
             
-            window.confirmationResult = confirmationResult;
-            window.location.replace('/otp')
+            setResult(confirmationResult);
+            isOtp(true)
           })
           .catch((error) => {
             console.log(error);
@@ -66,7 +69,7 @@ const PhoneNumber = () =>{
      fetchDoc();
      // btnStatus();
    }, []);
-  const [validated, setValidated] = useState(false);
+  
 
     
 
@@ -78,7 +81,7 @@ const PhoneNumber = () =>{
         await setDoc(doc(usersRef, window.accountId), {
           phone_no: number
         });
-        window.location.replace("/otp");
+        isOtp(true)
       } catch (e) {
         console.error("Error adding document: ", e);
       }
@@ -96,7 +99,7 @@ const PhoneNumber = () =>{
             let appVerifier = window.recaptchaVerifier;
             signInWithPhoneNumber(authentication, `+91${form.elements[0].value}`, appVerifier)
                 .then((confirmationResult) => {
-                    window.confirmationResult = confirmationResult;
+                    setResult(confirmationResult);
                     writeDoc(form.elements[0].value)
                     // window.location.replace('/otp')
                 })
@@ -108,9 +111,35 @@ const PhoneNumber = () =>{
         setValidated(true);
       
     }
+
+    const verifyOTP = (e) =>{
+      let otp = e.target.value;
+      // setOTP(otp);
+
+      if(otp.length == 6)
+      {
+          // let confirmationResult = localStorage.getItem("confirmationResult");
+          // const obj = JSON.parse(confirmationResult);
+          // console.log(obj);
+          console.log(result)
+          result
+            .confirm(otp)
+            .then((result) => {
+              
+              const user = result.user;
+              console.log(user);
+              console.log('Success')
+              window.location.replace('/');
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+      }
+  } 
+  
     return (
       <>
-      {/* {!loading ? ( */}
+      {!otp ? (
         <Row
           className="justify-content-center align-items-center"
           style={{ height: "75vh", maxWidth: "100%" }}
@@ -155,17 +184,44 @@ const PhoneNumber = () =>{
             </Form>
           </Col>
         </Row>
-{/* ): (
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            paddingTop: "10%",
-          }}
-        >
-          <Spinner type={"bars"} color="#20FDF0" />
-        </div>
-      )} */}
+        ): (
+            <Row className="justify-content-center align-items-center" style={{ height: "75vh", maxWidth: "100%" }}>
+            <Col className="border rounded p-4 bg-light" xs={10} sm={8} md={6} lg={4}>
+                <p className="fs-4 text-center mb-1">OTP has been sent to **********</p>
+                <Form noValidate validated={validated} onSubmit={(e)=>{e.preventDefault(); e.stopPropagation();}}>
+                    <Row className="justify-content-center">
+                    <Col md={8}>
+                        <Form.Group className="mb-4 text-center">
+                        <Form.Label column="md">Enter OTP</Form.Label>
+                        <Form.Control
+                            size="lg"
+                            id="otp"
+                            type="tel" 
+                            pattern="^\d{6}$"
+                            // value={OTP}
+                            onChange={verifyOTP}
+                            // placeholder="Enter your phone number"
+                            required
+                        ></Form.Control>
+                        <Form.Control.Feedback type="invalid">
+                            OTP should be 6 digits.
+                        </Form.Control.Feedback>
+                        </Form.Group>
+                    </Col>
+                    </Row>
+                    <div className="text-center">
+                        <Button
+                            // onClick={handleSubmit}
+                            variant="outline-dark"
+                            type="submit"
+                        >
+                            Verify OTP
+                        </Button>
+                    </div>
+                </Form>
+            </Col>
+        </Row>
+      )}
       </>
     );}
 export default PhoneNumber;

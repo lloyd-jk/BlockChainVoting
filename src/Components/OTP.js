@@ -5,7 +5,6 @@ const OTP = () =>
 
 {   
     const [validated, setValidated] = useState(false);
-    const [OTP, setOTP] = useState('');
     const handleSubmit = async (event) => {
         event.preventDefault();
         event.stopPropagation();
