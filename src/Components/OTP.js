@@ -2,7 +2,9 @@ import React, { useState, useEffect } from "react";
 import {Col, Row, Form, Button} from 'react-bootstrap';
 
 const OTP = () =>
-{   const [validated, setValidated] = useState(false);
+
+{   
+    const [validated, setValidated] = useState(false);
     const [OTP, setOTP] = useState('');
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -16,13 +18,16 @@ const OTP = () =>
 
         if(otp.length == 6)
         {
-            let confirmationResult = window.confirmationResult;
+            // let confirmationResult = localStorage.getItem("confirmationResult");
+            // const obj = JSON.parse(confirmationResult);
+            // console.log(obj);
             confirmationResult
               .confirm(otp)
               .then((result) => {
                 
                 const user = result.user;
                 console.log(user);
+                console.log('Success')
                 
               })
               .catch((error) => {
