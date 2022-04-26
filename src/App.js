@@ -20,7 +20,9 @@ import OTP from "./Components/OTP";
 export default function App() {
 
 useEffect(() => {
-  localStorage.setItem("otpVerified", false);
+  const val = localStorage.getItem("otpVerified");
+  if(val == null )
+    localStorage.setItem("otpVerified", false);
 }, []); 
   
   
