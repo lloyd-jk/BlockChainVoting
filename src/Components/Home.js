@@ -17,7 +17,16 @@ const Home = (props) => {
     changePolls(tempor);
     // location.reload();
     // changeStatus(btn_status);
+    let btn_status = [];
+    const x = await window.contract.getAllPosts();
+    for (let i = 0; i < x.length; i++) {
+      btn_status[i] = await window.contract.isPollActive({ post: x[i] });
+      btn_status[i] = btn_status[i].toString();
+    }
+    changeStatus(btn_status);
+    
     isLoading(false);
+
   };
   const endAPoll = async (poll) => {
     isLoading(true);
@@ -70,7 +79,15 @@ const Home = (props) => {
 
   return (
     <>
-      {!loading ? (
+      {!loading ? window.accountId === "" ? <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            paddingTop: "10%",
+          }}
+        >
+          <h1> Login To View The Active Polls</h1>
+        </div> : (
         <Container>
           <Table style={{ margin: "5vh" }} striped bordered hover>
             <thead>
@@ -138,7 +155,7 @@ const Home = (props) => {
                           <div>
                             <Button
                               style={{ marginLeft: "20px" }}
-                              variant="danger"
+                              variant="success"
                               onClick={() => props.collectCandidate(poll)}
                             >
                               Vote Now!
