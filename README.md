@@ -8,7 +8,7 @@ To run this project locally:
 
 1. Prerequisites: Make sure you've installed [Node.js] ≥ 12
 2. Install dependencies: `npm install`
-3. Start coding: `npm run`
+3. To start the Application: `npm run`
 
 
 
